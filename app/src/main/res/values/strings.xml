@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Hairapy</string>
+    <string name="intro">Unlock the secret to perfect hair with Hairapy</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="email_error">Email not valid.</string>
+    <string name="password_error">Password should be 8 characters long.</string>
+    <string name="password_confirmation_hint">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="name_error">Name musn\'t be empty!</string>
+
+    <string name="close_camera">Close Camera</string>
+    <string name="take_a_photo">Take a Photo</string>
+    <string name="flip_to_front_camera">Flip to Front Camera</string>
+    <string name="pick_gallery">Pick a photo from gallery</string>
+    <string name="access_denied">Access Denied</string>
+    <string name="taking_photo_failed">Failed to take a photo</string>
+    <string name="open_camera_failed">Failed to open camera.</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor.
+    </string>
+
+    <string name="lorem_ipsum_short">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem.
+    </string>
+</resources>
