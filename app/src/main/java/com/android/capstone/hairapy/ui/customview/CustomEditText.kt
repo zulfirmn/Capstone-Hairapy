@@ -115,11 +115,11 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
         compoundDrawablePadding = 16
     }
 
-    fun isValidPassword(password: CharSequence?) =
+    private fun isValidPassword(password: CharSequence?) =
         !password.isNullOrEmpty() && password.length >= minimumPasswordsLength
-    fun isValidEmail(email: CharSequence?) =
+    private fun isValidEmail(email: CharSequence?) =
         !email.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    fun isValidName(name: CharSequence?) = !name.isNullOrEmpty()
+    private fun isValidName(name: CharSequence?) = !name.isNullOrEmpty()
 
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
         if (compoundDrawables[2] != null) {

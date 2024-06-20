@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.android.capstone.hairapy.MainActivity
+import com.android.capstone.hairapy.ui.main.MainActivity
 import com.android.capstone.hairapy.databinding.FragmentRecommendationBinding
 
 class RecommendationFragment: Fragment() {

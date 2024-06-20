@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="109dp"
             android:layout_marginBottom="66dp"
-            android:text="Alread have an account?"
+            android:text="Already have an account?"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

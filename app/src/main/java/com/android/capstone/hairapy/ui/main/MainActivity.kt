@@ -1,13 +1,12 @@
-package com.android.capstone.hairapy
+package com.android.capstone.hairapy.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.android.capstone.hairapy.R
 import com.android.capstone.hairapy.databinding.ActivityMainBinding
-import com.android.capstone.hairapy.ui.camera.CameraFragment
 import com.android.capstone.hairapy.ui.camera.ContinueCameraFragment
 import com.android.capstone.hairapy.ui.history.HistoryFragment
-import com.android.capstone.hairapy.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

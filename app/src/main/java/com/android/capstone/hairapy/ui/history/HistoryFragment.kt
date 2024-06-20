@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.capstone.hairapy.R
 import com.android.capstone.hairapy.data.adapter.HistoryAdapter
-import com.android.capstone.hairapy.data.model.Article
 import com.android.capstone.hairapy.data.model.History
 import com.android.capstone.hairapy.databinding.FragmentHistoryBinding
 

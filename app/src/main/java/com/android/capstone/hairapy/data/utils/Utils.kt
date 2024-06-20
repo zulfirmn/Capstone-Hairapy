@@ -105,11 +105,4 @@ fun String?.getTimeAgoFormat(): String {
         diffs >= oneMin -> "${diffs / oneMin} min ago"
         else -> "Just now"
     }
-
-    fun String?.generateToken() = "Bearer $this"
-
-    fun HttpException.getErrorMessage(): String {
-        val message = response()?.errorBody()?.string().toString()
-        return JSONObject(message).getString("message")
-    }
 }

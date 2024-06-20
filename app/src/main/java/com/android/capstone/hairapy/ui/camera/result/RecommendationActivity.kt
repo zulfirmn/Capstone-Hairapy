@@ -3,7 +3,7 @@ package com.android.capstone.hairapy.ui.camera.result
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.android.capstone.hairapy.MainActivity
+import com.android.capstone.hairapy.ui.main.MainActivity
 import com.android.capstone.hairapy.databinding.ActivityRecommendationBinding
 
 class RecommendationActivity:AppCompatActivity() {
