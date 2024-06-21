@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.capstone.hairapy.data.UserRepository
 import com.android.capstone.hairapy.data.api.response.ErrorResponse
 import com.android.capstone.hairapy.data.pref.Token
+import com.android.capstone.hairapy.data.utils.SingleLiveEvent
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -18,7 +19,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _isSuccess = MutableLiveData<Boolean>()
     val isSuccess: LiveData<Boolean> = _isSuccess
 
-    private val _message = MutableLiveData<String>()
+    private val _message = SingleLiveEvent<String>()
     val message: LiveData<String> = _message
 
     fun userLogin(username: String, password: String) {
@@ -35,7 +36,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             } catch (e: HttpException) {
                 val jsonInString = e.response()?.errorBody()?.string()
                 val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-                val errorMessage = errorBody.message.toString()
+                val errorMessage = errorBody.message.orEmpty()
                 _isLoading.value = false
                 _isSuccess.value = false
                 _message.value = errorMessage

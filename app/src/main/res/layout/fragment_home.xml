@@ -83,7 +83,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSeeAll"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
         tools:listitem="@layout/item_article_list" />
 
     <TextView
@@ -99,15 +99,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-    <TextView
-        android:id="@+id/tvSeeAll"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="32dp"
-        android:text="See all"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rvArticle"
+        app:layout_constraintEnd_toEndOf="@+id/rvArticle"
+        app:layout_constraintStart_toStartOf="@+id/rvArticle"
+        app:layout_constraintTop_toTopOf="@+id/rvArticle"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,9 @@
         android:id="@+id/recommendationFragment"
         android:name="com.android.capstone.hairapy.ui.camera.result.RecommendationFragment"
         android:label="RecommendationFragment"
-        tools:layout="@layout/fragment_recommendation"
-        />
+        tools:layout="@layout/fragment_recommendation">
+        <argument
+            android:name="recProduct"
+            app:argType="com.android.capstone.hairapy.data.model.RecProduct" />
+    </fragment>
 </navigation>

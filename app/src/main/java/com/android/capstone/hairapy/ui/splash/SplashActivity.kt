@@ -9,6 +9,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.android.capstone.hairapy.R
+import com.android.capstone.hairapy.ui.main.MainActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity:AppCompatActivity() {
@@ -17,7 +18,7 @@ class SplashActivity:AppCompatActivity() {
     private var durasi: Long=1500 //1.5 detik
 
     private val mRunnable: Runnable = Runnable {
-        val intent = Intent(applicationContext, OnboardingActivity::class.java)
+        val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
         finish()
     }

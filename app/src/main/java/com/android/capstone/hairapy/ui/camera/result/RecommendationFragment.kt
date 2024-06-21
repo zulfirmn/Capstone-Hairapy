@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.android.capstone.hairapy.ui.main.MainActivity
 import com.android.capstone.hairapy.databinding.FragmentRecommendationBinding
+import com.bumptech.glide.Glide
 
 class RecommendationFragment: Fragment() {
 
@@ -17,7 +19,7 @@ class RecommendationFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRecommendationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -25,12 +27,21 @@ class RecommendationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBackToHome.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+        val args: RecommendationFragmentArgs by navArgs()
+        val recommendation = args.recProduct
+
+        binding.apply {
+            nameProduct.text = recommendation.name
+            Glide.with(requireActivity())
+                .load(recommendation.image)
+                .into(imgProduct)
         }
 
+        binding.btnBackToHome.setOnClickListener {
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        }
     }
-
 }

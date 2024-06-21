@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.capstone.hairapy.R
 import com.android.capstone.hairapy.data.adapter.HistoryAdapter
-import com.android.capstone.hairapy.data.model.History
 import com.android.capstone.hairapy.databinding.FragmentHistoryBinding
 
 class HistoryFragment: Fragment() {
 
     private lateinit var binding: FragmentHistoryBinding
     private val historyAdapter = HistoryAdapter()
+
+    private val viewModel by activityViewModels<HistoryViewModel> {
+        HistoryViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +31,6 @@ class HistoryFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.rvHistory.adapter = historyAdapter
 
         binding.rvHistory.apply {
@@ -37,21 +39,8 @@ class HistoryFragment: Fragment() {
             adapter = historyAdapter
         }
 
-        historyAdapter.submitList(getMockData())
-
+        viewModel.historyList.observe(viewLifecycleOwner) {
+            historyAdapter.submitList(it)
+        }
     }
-
-    private fun getMockData(): List<History> {
-        return listOf(
-            History("1", "Title", R.drawable.shampoo_product ),
-            History("2", "Title", R.drawable.shampoo_product ),
-            History("3", "Title", R.drawable.shampoo_product  ),
-            History("4", "Title", R.drawable.shampoo_product  ),
-            //    Article("5", "Title", getString(R.string.lorem_ipsum_short),"" ),
-            //   Article("6", "Title", getString(R.string.lorem_ipsum_short),"" ),
-            //   Article("7", "Title", getString(R.string.lorem_ipsum_short),"" ),
-
-        )
-    }
-
 }

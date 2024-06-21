@@ -1,19 +1,26 @@
 package com.android.capstone.hairapy.data.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.capstone.hairapy.R
+import com.android.capstone.hairapy.data.adapter.HistoryAdapter.Companion.DIFF_CALLBACK
 import com.android.capstone.hairapy.data.api.response.ArticleItem
+import com.android.capstone.hairapy.data.model.Article
 import com.android.capstone.hairapy.databinding.ItemArticleListBinding
+import com.android.capstone.hairapy.ui.main.ArticleActivity
 import com.bumptech.glide.Glide
 
 class ArticleAdapter : ListAdapter<ArticleItem, ArticleAdapter.ArticleViewHolder>(DIFF_CALLBACK) {
 
-    class ArticleViewHolder(private val binding: ItemArticleListBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ArticleViewHolder(val binding: ItemArticleListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(article: ArticleItem) {
             with(binding) {
@@ -36,7 +43,29 @@ class ArticleAdapter : ListAdapter<ArticleItem, ArticleAdapter.ArticleViewHolder
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val article = getItem(position)
+
+        holder.bind(article)
+
+        val articleItem = Article(
+            article.imageUrl,
+            article.title,
+            article.content
+        )
+
+        holder.itemView.setOnClickListener {
+            val moveToDetail = Intent(holder.itemView.context, ArticleActivity::class.java)
+            moveToDetail.putExtra(ArticleActivity.EXTRA_ARTICLE, articleItem)
+
+            val optionsCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    holder.itemView.context as Activity,
+                    Pair(holder.binding.imgArticle, "image"),
+                    Pair(holder.binding.tvArticleTitle, "title"),
+                    Pair(holder.binding.tvContentArticle, "desc"),
+                )
+            holder.itemView.context.startActivity(moveToDetail, optionsCompat.toBundle())
+        }
     }
 
     companion object {

@@ -28,6 +28,12 @@ data class Result(
 	@field:SerializedName("result")
 	val result: String? = null,
 
+	@field:SerializedName("createdAt")
+	val createdAt: String? = null,
+
+	@field:SerializedName("confidenceScore")
+	val confidenceScore: Double? = null,
+
 	@field:SerializedName("ingredients")
 	val ingredients: List<String?>? = null,
 

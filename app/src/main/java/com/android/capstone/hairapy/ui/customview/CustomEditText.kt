@@ -3,7 +3,9 @@ package com.android.capstone.hairapy.ui.customview
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
 import android.view.MotionEvent
@@ -22,8 +24,10 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
     private lateinit var backgroundsDrawable: Drawable
     private lateinit var backgroundErrorsDrawable: Drawable
     private var backgroundCorrectsDrawable: Drawable? = null
-    private var minimumPasswordsLength = 8
-    private var etHints: String = ""
+    private var minPasswordsLength = 8
+    private var maxCharLength = 12
+    private var password = ""
+    private var etHints = ""
     private var isPasswordsShown = false
     private var snapsInputType = SnapInputType.PASSWORD
     constructor(context: Context) : super(context) {
@@ -48,11 +52,11 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
     }
     private fun inits() {
         when (snapsInputType) {
-            SnapInputType.EMAIL -> {
-                inputType = INPUT_TYPE_EMAILS
-                etHints = resources.getString(R.string.email_hint)
-                addTextChangedListener(onTextChanged = { email, _, _, _ ->
-                    if (!isValidEmail(email)) setError(resources.getString(R.string.email_error), null)
+            SnapInputType.USERNAME -> {
+                inputType = INPUT_TYPE_USERNAMES
+                etHints = resources.getString(R.string.username_hint)
+                addTextChangedListener(onTextChanged = { username, _, _, _ ->
+                    if (!isValidUsername(username)) setError(resources.getString(R.string.username_error), null)
                     backgroundCorrectsDrawable = ContextCompat.getDrawable(context, R.drawable.bg_snap_edit_text_correct)
                 })
             }
@@ -67,25 +71,6 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
                 })
                 setOnTouchListener(this)
             }
-            SnapInputType.PASSWORD_CONFIRMATION -> {
-                inputType = INPUT_TYPE_PASSWORDS
-                etHints = resources.getString(R.string.password_confirmation_hint)
-                showPasswordIconsDrawable = ContextCompat.getDrawable(context, R.drawable.ic_show_password)
-                hidePasswordIconsDrawable = ContextCompat.getDrawable(context, R.drawable.ic_hide_password)
-                addTextChangedListener(onTextChanged = { password, _, _, _ ->
-                    if (!isValidPassword(password)) setError(resources.getString(R.string.password_error), null)
-                    backgroundCorrectsDrawable = ContextCompat.getDrawable(context, R.drawable.bg_snap_edit_text_correct)
-                })
-                setOnTouchListener(this)
-            }
-            SnapInputType.NAME -> {
-                inputType = INPUT_TYPE_TEXTS_NORMAL
-                etHints = resources.getString(R.string.name)
-                addTextChangedListener(onTextChanged = { name, _, _, _ ->
-                    if (!isValidName(name)) setError(context.getString(R.string.name_error), null)
-                    backgroundCorrectsDrawable = ContextCompat.getDrawable(context, R.drawable.bg_snap_edit_text_correct)
-                })
-            }
         }
         backgroundsDrawable = ContextCompat.getDrawable(context, R.drawable.bg_snap_edit_text) as Drawable
         backgroundErrorsDrawable = ContextCompat.getDrawable(context, R.drawable.bg_snap_edit_text_error) as Drawable
@@ -93,12 +78,10 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
 
     private fun getsAttribute(attrs: AttributeSet?) {
         val styles = context.obtainStyledAttributes(attrs, R.styleable.SnapEditText)
-        minimumPasswordsLength = styles.getInt(R.styleable.SnapEditText_min_password_length, 8)
+        minPasswordsLength = styles.getInt(R.styleable.SnapEditText_min_password_length, 8)
         snapsInputType = when (styles.getIntOrThrow(R.styleable.SnapEditText_custom_type)) {
             SnapInputType.PASSWORD.value -> SnapInputType.PASSWORD
-            SnapInputType.EMAIL.value -> SnapInputType.EMAIL
-            SnapInputType.PASSWORD_CONFIRMATION.value -> SnapInputType.PASSWORD_CONFIRMATION
-            SnapInputType.NAME.value -> SnapInputType.NAME
+            SnapInputType.USERNAME.value -> SnapInputType.USERNAME
             else -> throw IllegalArgumentException("Invalid custom_type value")
         }
         styles.recycle()
@@ -116,10 +99,9 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
     }
 
     private fun isValidPassword(password: CharSequence?) =
-        !password.isNullOrEmpty() && password.length >= minimumPasswordsLength
-    private fun isValidEmail(email: CharSequence?) =
-        !email.isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    private fun isValidName(name: CharSequence?) = !name.isNullOrEmpty()
+        !password.isNullOrEmpty() && password.length >= minPasswordsLength
+    private fun isValidUsername(username: CharSequence?) =
+        !username.isNullOrEmpty() && username.length <= maxCharLength
 
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
         if (compoundDrawables[2] != null) {
@@ -157,17 +139,14 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
     }
 
     enum class SnapInputType(val value: Int) {
-        EMAIL(0),
+        USERNAME(0),
         PASSWORD(1),
-        PASSWORD_CONFIRMATION(2),
-        NAME(3)
     }
 
     companion object {
-        private const val INPUT_TYPE_EMAILS = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        private const val INPUT_TYPE_USERNAMES = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
         private const val INPUT_TYPE_PASSWORDS = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         private const val INPUT_TYPE_VISIBLE_PASSWORDS = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        private const val INPUT_TYPE_TEXTS_NORMAL = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
     }
 
 }

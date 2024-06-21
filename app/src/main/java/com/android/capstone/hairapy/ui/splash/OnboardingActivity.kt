@@ -20,7 +20,6 @@ class OnboardingActivity:AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-
             btnSignupOnboard.setOnClickListener {
                 val intent = Intent(this@OnboardingActivity, RegisterActivity::class.java)
                 startActivity(intent)
@@ -30,11 +29,9 @@ class OnboardingActivity:AppCompatActivity() {
                 val intent = Intent(this@OnboardingActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
-
         }
 
         setupView()
-
     }
 
     private fun setupView() {
@@ -47,5 +44,4 @@ class OnboardingActivity:AppCompatActivity() {
             )
         }
     }
-
 }

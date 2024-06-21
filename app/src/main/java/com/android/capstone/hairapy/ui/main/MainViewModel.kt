@@ -9,6 +9,7 @@ import com.android.capstone.hairapy.data.UserRepository
 import com.android.capstone.hairapy.data.api.response.ArticleItem
 import com.android.capstone.hairapy.data.api.response.ErrorResponse
 import com.android.capstone.hairapy.data.pref.Token
+import com.android.capstone.hairapy.data.utils.SingleLiveEvent
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -20,8 +21,8 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _message = MutableLiveData<String?>()
-    val message: LiveData<String?> = _message
+    private val _message = SingleLiveEvent<String>()
+    val message: LiveData<String> = _message
 
     fun getSession(): LiveData<Token> {
         return repository.getSession().asLiveData()

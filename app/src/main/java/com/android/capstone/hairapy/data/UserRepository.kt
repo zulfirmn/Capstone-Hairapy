@@ -4,6 +4,7 @@ import com.android.capstone.hairapy.data.api.response.ArticleItem
 import com.android.capstone.hairapy.data.api.response.AuthResponse
 import com.android.capstone.hairapy.data.api.response.FileUploadResponse
 import com.android.capstone.hairapy.data.api.retrofit.ApiService
+import com.android.capstone.hairapy.data.db.HistoryPrediction
 import com.android.capstone.hairapy.data.pref.Token
 import com.android.capstone.hairapy.data.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
@@ -44,6 +45,10 @@ class UserRepository private constructor(
 
     suspend fun uploadImg(body: MultipartBody.Part): FileUploadResponse {
         return apiService.uploadImage(body)
+    }
+
+    suspend fun addHistory(history: HistoryPrediction) {
+        history
     }
 
     companion object {

@@ -7,26 +7,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.capstone.hairapy.R
-import com.android.capstone.hairapy.data.model.History
+import com.android.capstone.hairapy.data.db.HistoryPrediction
 import com.android.capstone.hairapy.databinding.ItemHistoryBinding
 import com.bumptech.glide.Glide
 
-class HistoryAdapter : ListAdapter<History, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK){
+class HistoryAdapter : ListAdapter<HistoryPrediction, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK){
 
     class HistoryViewHolder(private val binding: ItemHistoryBinding):RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(article: History) {
+        fun bind(history: HistoryPrediction) {
             with(binding) {
                 // Assuming article.imageResId is the drawable resource ID
                 Glide.with(itemView.context)
-                    .load(article.image)
+                    .load(history.uri)
                     .placeholder(R.drawable.bg_image_loading)
                     .into(imgHistory)
 
-                tvHistoryTitle.text = article.title
-
-
-
+                tvHistoryResult.text = history.result
+                tvHistoryDate.text = history.date
             }
         }
 
@@ -42,16 +40,16 @@ class HistoryAdapter : ListAdapter<History, HistoryAdapter.HistoryViewHolder>(DI
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<History> =
-            object : DiffUtil.ItemCallback<History>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<HistoryPrediction> =
+            object : DiffUtil.ItemCallback<HistoryPrediction>() {
 
-                override fun areItemsTheSame(oldItem: History, storyItem: History): Boolean {
-                    return oldItem.id == storyItem.id
+                override fun areItemsTheSame(oldItem: HistoryPrediction, newItem: HistoryPrediction): Boolean {
+                    return oldItem.id == newItem.id
                 }
 
                 @SuppressLint("DiffUtilEquals")
-                override fun areContentsTheSame(oldItem: History, storyItem: History): Boolean {
-                    return oldItem == storyItem
+                override fun areContentsTheSame(oldItem: HistoryPrediction, newItem: HistoryPrediction): Boolean {
+                    return oldItem == newItem
                 }
             }
     }

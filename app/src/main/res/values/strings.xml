@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Hairapy</string>
     <string name="intro">Unlock the secret to perfect hair with Hairapy</string>
-    <string name="email_hint">Email</string>
+    <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    <string name="email_error">Email not valid.</string>
-    <string name="password_error">Password should be 8 characters long.</string>
+    <string name="username_error">Username more than 12 characters</string>
+    <string name="password_error">Password should be 8 characters long</string>
+    <string name="confirm_password_error">Password does not match</string>
     <string name="password_confirmation_hint">Confirm Password</string>
     <string name="name">Name</string>
     <string name="name_error">Name musn\'t be empty!</string>
@@ -17,6 +18,27 @@
     <string name="taking_photo_failed">Failed to take a photo</string>
     <string name="open_camera_failed">Failed to open camera.</string>
 
+    <string-array name="dandruff">
+        <item>Use anti-dandruff shampoos containing zinc pyrithione or selenium sulfide.</item>
+        <item>Wash your hair regularly and make sure to rinse it thoroughly.</item>
+        <item>Avoid hair products with harsh chemicals.</item>
+    </string-array>
+    <string-array name="psoriasis">
+        <item>Use specialized shampoos containing tar or salicylic acid.</item>
+        <item>Avoid scratching your scalp to prevent irritation.</item>
+        <item>Consult a doctor for appropriate medical treatment.</item>
+    </string-array>
+    <string-array name="hair_loss">
+        <item>Use shampoos and conditioners containing biotin and keratin.</item>
+        <item>Consume foods rich in vitamin E, iron, and protein.</item>
+        <item>Avoid excessive use of heat styling tools.</item>
+    </string-array>
+    <string-array name="hair_greasy">
+        <item>Wash your hair with shampoos specifically designed for hair greasy, containing ingredients like tea tree oil or salicylic acid.</item>
+        <item>Avoid brushing your hair too frequently, as this can stimulate oil production.</item>
+        <item>Rinse your hair with warm (not hot) water to avoid over-stimulating the oil glands.</item>
+    </string-array>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -26,4 +48,5 @@
     <string name="lorem_ipsum_short">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem.
     </string>
+    <string name="todo">Things you should do if you have %1$s</string>
 </resources>

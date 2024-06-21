@@ -1,21 +1,36 @@
 package com.android.capstone.hairapy.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.android.capstone.hairapy.R
 import com.android.capstone.hairapy.databinding.ActivityMainBinding
+import com.android.capstone.hairapy.ui.ViewModelFactory
 import com.android.capstone.hairapy.ui.camera.ContinueCameraFragment
 import com.android.capstone.hairapy.ui.history.HistoryFragment
+import com.android.capstone.hairapy.ui.splash.OnboardingActivity
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
 
+    private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, OnboardingActivity::class.java))
+                finish()
+            }
+        }
 
         binding.bottomNavigationView.background = null
 

@@ -14,6 +14,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -82,27 +83,9 @@ fun Bitmap.rotateBitmap(isBackCamera: Boolean = false): Bitmap {
     }
 }
 
-fun String?.getTimeAgoFormat(): String {
-    if (this.isNullOrEmpty()) return "Unknown"
-    val formats = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    val sdf = SimpleDateFormat(formats, Locale.getDefault()).apply {
-        timeZone = TimeZone.getTimeZone("GMT")
-    }
-    val pastTime = sdf.parse(this)?.time ?: return "Unknown"
-    val diffs = System.currentTimeMillis() - pastTime
-
-    val oneMin = 60_000L
-    val oneHour = 60 * oneMin
-    val oneDay = 24 * oneHour
-    val oneMonth = 30 * oneDay
-    val oneYear = 365 * oneDay
-
-    return when {
-        diffs >= oneYear -> "${diffs / oneYear} years ago"
-        diffs >= oneMonth -> "${diffs / oneMonth} months ago"
-        diffs >= oneDay -> "${diffs / oneDay} days ago"
-        diffs >= oneHour -> "${diffs / oneHour} hours ago"
-        diffs >= oneMin -> "${diffs / oneMin} min ago"
-        else -> "Just now"
-    }
+fun convertMillisToDateString(millis: Long): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd | HH:mm", Locale.getDefault())
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = millis
+    return sdf.format(calendar.time)
 }

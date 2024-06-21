@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.capstone.hairapy.databinding.ActivityRegisterBinding
 import com.android.capstone.hairapy.ui.ViewModelFactory
@@ -24,64 +24,60 @@ class RegisterActivity:AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.registerButton.setOnClickListener {
-//            val username = binding.emailPhoneNumber.text.toString()
-//            val password = binding.passwordSignUp.text.toString()
-//            viewModel.userSignUp(username, password)
-//
-//            viewModel.isLoading.observe(this) {
-//                showLoading(it)
-//            }
-//
-//            viewModel.isSuccess.observe(this) {
-//                alert(it)
-//            }
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            val username = binding.emailPhoneNumber.text.toString()
+            val password = binding.passwordSignUp.text.toString()
+            viewModel.userSignUp(username, password)
+
+            viewModel.isLoading.observe(this) {
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            }
+
+            viewModel.isSuccess.observe(this) { isSuccess ->
+                if (isSuccess) {
+                    viewModel.message.observe(this) { message ->
+                        showToast(message)
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    viewModel.message.observe(this) { message ->
+                        showToast(message)
+                    }
+                }
+            }
         }
 
-        binding.signUpLink.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
+        setupObservers()
         setupView()
     }
 
-    private fun alert(isSuccess: Boolean) {
-        viewModel.message.observe(this) { message ->
+    private fun setupObservers() {
+        viewModel.isLoading.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        viewModel.isSuccess.observe(this) { isSuccess ->
             if (isSuccess) {
-                AlertDialog.Builder(this).apply {
-                    setTitle("Berhasil")
-                    setMessage(message)
-                    setPositiveButton("Lanjut") { _, _ ->
-                        val intent = Intent(context, LoginActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        }
-                        startActivity(intent)
-                    }
-                    create()
-                    show()
+                viewModel.message.observe(this) { message ->
+                    showToast(message)
                 }
+                navigateToLogin()
             } else {
-                AlertDialog.Builder(this).apply {
-                    setTitle("Gagal")
-                    setMessage(message)
-                    setPositiveButton("Tutup") { dialog, _ ->
-                        dialog.cancel()
-                    }
-                    create()
-                    show()
+                viewModel.message.observe(this) { message ->
+                    showToast(message)
                 }
             }
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupView() {
@@ -94,5 +90,4 @@ class RegisterActivity:AppCompatActivity() {
             )
         }
     }
-
 }
